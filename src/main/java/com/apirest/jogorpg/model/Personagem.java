@@ -16,8 +16,6 @@ public class Personagem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "NOME")
-    private String nome;
     @Column(name = "TIPO")
     private String tipo;
     @Column(name = "QTD_VIDAS")
@@ -33,8 +31,7 @@ public class Personagem implements Serializable {
     @Column(name = "TOTAL_FACES")
     private int tolalFaces;
 
-    public Personagem(String nome, String tipo, int qtdVidas, int poder, int defesa, int agilidade, int qtdDado, int tolalFaces) {
-        this.nome = nome;
+    public Personagem(String tipo, int qtdVidas, int poder, int defesa, int agilidade, int qtdDado, int tolalFaces) {
         this.tipo = tipo;
         this.qtdVidas = qtdVidas;
         this.poder = poder;
