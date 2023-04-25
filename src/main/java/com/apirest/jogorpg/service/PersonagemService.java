@@ -21,7 +21,7 @@ public class PersonagemService {
     private BoredApiService boredApiService;
 
     public Personagem create(Personagem person){
-        createRandom();
+        //createRandom();
         Personagem p = criarPersnagem(person.getTipo());
         person.setQtdDado(p.getQtdDado());
         person.setPoder(p.getPoder());

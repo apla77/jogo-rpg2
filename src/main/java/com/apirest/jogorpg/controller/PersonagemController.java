@@ -41,7 +41,7 @@ public class PersonagemController {
     }
 
     @PutMapping("")
-    @ApiOperation("Update a task on TODO list")
+    @ApiOperation("Update a personagem on TODO list")
     public ResponseEntity<Personagem> update(@RequestBody Personagem personagem){
         return new ResponseEntity<>(service.update(personagem), HttpStatus.OK);
     }
@@ -52,10 +52,4 @@ public class PersonagemController {
         service.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-  //  @PostMapping("/randpm")
-  //  @ApiOperation("Create a random personagem in TODO list")
-  // public ResponseEntity<Personagem> createRandom(){
-  //     return new ResponseEntity<>(service.generateRandom(), HttpStatus.CREATED);
-  // }
 }

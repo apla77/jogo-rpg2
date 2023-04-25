@@ -27,7 +27,7 @@ public class JogadorController {
     private PersonagemService personagemService;
 
     @GetMapping("")
-    @ApiOperation("find a personagens in TODO list")
+    @ApiOperation("find a Jogador in TODO list")
     public ResponseEntity<List<Jogador>> getAll(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
@@ -36,5 +36,24 @@ public class JogadorController {
     @ApiOperation("Create a new Jogador in TODO list")
     public ResponseEntity<Jogador> create(@RequestBody Jogador jogador){
         return new ResponseEntity<>(service.create(jogador), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("Find a Jogador by it's id in the TODO list")
+    public ResponseEntity<Jogador> getById(@PathVariable(value = "id") Long id){
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("")
+    @ApiOperation("Update a Jogador on TODO list")
+    public ResponseEntity<Jogador> update(@RequestBody Jogador jogador){
+        return new ResponseEntity<>(service.update(jogador), HttpStatus.OK);
+    }
+
+    @DeleteMapping("")
+    @ApiOperation("Delete a Jogador on TODO list")
+    public ResponseEntity<HttpStatus> delete(@RequestHeader Long id){
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
