@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +32,9 @@ public class Jogador implements Serializable {
     @Column(name = "PERSONAGEM", length = 1000)
     private Personagem personagem;
 
-    @Column(name = "STATUS")
-    private int status;
+    @Column(name = "SALDO")
+    private int saldo;
 
+    @Column(name = "COD_BATALHA")
+    private Long cod_batalha;
 }

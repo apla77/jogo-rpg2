@@ -51,18 +51,21 @@ public class JogadorService {
         for (Personagem p : persons) {
             if(p.getTipo().equals(jogador.getTipo())){
                 jogador.setPersonagem(p);
+                jogador.setCod_batalha(p.getId());
+                createMonstros(p.getId());
             }
         }
-        createMonstros();
+
         return repository.save(jogador);
     }
 
-    public Jogador createMonstros(){
+    public Jogador createMonstros(Long id){
         Jogador monster = new Jogador();
         Personagem p = personagemService.createRandom();
         monster.setPersonagem(p);
         monster.setTipo(p.getTipo());
         monster.setNome("Monstro");
+        monster.setCod_batalha(id);
         monster.setCreatedAt(LocalDateTime.now());
         return repository.save(monster);
     }
