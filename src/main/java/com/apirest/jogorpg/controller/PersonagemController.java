@@ -53,16 +53,9 @@ public class PersonagemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/randpm")
-    @ApiOperation("Create a random personagem in TODO list")
-    public ResponseEntity<Personagem> createRandom(){
-        return new ResponseEntity<>(service.generateRandom(), HttpStatus.CREATED);
-    }
-
-    Personagem p1 = new Personagem("GUERREIRO", 20, 7, 5, 6, 1, 12);
-    Personagem p2 = new Personagem("BARBARO",21,10,2,5,2,8);
-    Personagem p3 = new Personagem("CAVALEIRO",26,6,8,3,2,6);
-    Personagem p4 = new Personagem("ORC",42,7,1,2,3,4);
-    Personagem p5 = new Personagem("GIGANTE",34,10,4,4,2,6);
-    Personagem p6 = new Personagem("LOBISOMEN",34,7,4,7,2,4);
+  //  @PostMapping("/randpm")
+  //  @ApiOperation("Create a random personagem in TODO list")
+  // public ResponseEntity<Personagem> createRandom(){
+  //     return new ResponseEntity<>(service.generateRandom(), HttpStatus.CREATED);
+  // }
 }
