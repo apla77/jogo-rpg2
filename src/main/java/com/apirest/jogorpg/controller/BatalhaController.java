@@ -18,6 +18,12 @@ public class JogarController {
     @Autowired
     private JogadorService service;
 
+    @GetMapping("/{id}")
+    @ApiOperation("Find a Jogador by it's id in the TODO list")
+    public ResponseEntity<Jogador> iniciarJogo(@PathVariable(value = "id") Long id){
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    }
+
     @PutMapping("")
     @ApiOperation("Update a Jogada on TODO list")
     public ResponseEntity<Jogador> update(@RequestBody Jogador jogador){
