@@ -1,6 +1,8 @@
 package com.apirest.jogorpg.controller;
 
+import com.apirest.jogorpg.model.Batalha;
 import com.apirest.jogorpg.model.Jogador;
+import com.apirest.jogorpg.service.BatalhaServise;
 import com.apirest.jogorpg.service.JogadorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,24 +11,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping(value = "/jogar")
-@Api(value = "JOGAR API REST")
+@RequestMapping(value = "/batalha")
+@Api(value = "BATALHA API REST")
 @CrossOrigin(origins = "*")
-public class JogarController {
+public class BatalhaController {
 
     @Autowired
-    private JogadorService service;
+    private BatalhaServise service;
 
     @GetMapping("/{id}")
-    @ApiOperation("Find a Jogador by it's id in the TODO list")
-    public ResponseEntity<Jogador> iniciarJogo(@PathVariable(value = "id") Long id){
-        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    @ApiOperation("Start a battle by your id in the TODO list")
+    public ResponseEntity<Batalha> getById(@PathVariable(value = "id") Long id){
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
-    @PutMapping("")
-    @ApiOperation("Update a Jogada on TODO list")
-    public ResponseEntity<Jogador> update(@RequestBody Jogador jogador){
-        return new ResponseEntity<>(service.update(jogador), HttpStatus.OK);
+    @GetMapping("")
+    @ApiOperation("find a Batalha in TODO list")
+    public ResponseEntity<List<Batalha>> getAll(){
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}")
+    @ApiOperation("Create a new Batalha in TODO list")
+    public ResponseEntity<Batalha> create(@PathVariable(value = "id") Long id){
+        return new ResponseEntity<>(service.create(id), HttpStatus.CREATED);
     }
 }
