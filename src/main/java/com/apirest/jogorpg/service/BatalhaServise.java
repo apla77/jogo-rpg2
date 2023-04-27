@@ -82,12 +82,10 @@ public class BatalhaServise {
         }
             Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
             Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCod_batalha());
-
             int dano = 0;
 
-            if (batalha.getIniciativa().equals("Monstro")) {
-
-                if (monstro.get().getSaldo() < jogador.get().getSaldo()) {
+            if (batalha.getIniciativa().equals("Jogador")) {
+                if (jogador.get().getSaldo() > monstro.get().getSaldo()) {
                     dano = jogarDados(monstro.get().getPersonagem().getQtdDado(), monstro.get().getPersonagem().getTolalFaces());
                     monstro.get().getPersonagem().setQtdVidas(monstro.get().getPersonagem().getQtdVidas() - dano);
                     if (monstro.get().getPersonagem().getQtdVidas() <= 0) {
@@ -97,9 +95,10 @@ public class BatalhaServise {
                     }
                     batalha.setMonstro(monstro.get());
                 }
-
-            } else {
-                if (jogador.get().getSaldo() < monstro.get().getSaldo()) {
+                batalha.setIniciativa("Monstro");
+            }
+            else if(batalha.getIniciativa().equals("Monstro")) {
+                if (monstro.get().getSaldo() > jogador.get().getSaldo()) {
                     dano = jogarDados(jogador.get().getPersonagem().getQtdDado(), jogador.get().getPersonagem().getTolalFaces());
                     jogador.get().getPersonagem().setQtdVidas(jogador.get().getPersonagem().getQtdVidas() - dano);
                     if (jogador.get().getPersonagem().getQtdVidas() <= 0) {
@@ -109,7 +108,7 @@ public class BatalhaServise {
                     }
                     batalha.setJogador(jogador.get());
                 }
-
+                batalha.setIniciativa("Jogador");
             }
         return repository.save(batalha);
     }
