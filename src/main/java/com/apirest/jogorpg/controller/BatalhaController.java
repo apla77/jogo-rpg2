@@ -30,7 +30,7 @@ public class BatalhaController {
 
     @GetMapping("")
     @ApiOperation("find a Batalha in TODO list")
-    public ResponseEntity<List<Batalha>> getAll(){
+    public ResponseEntity<List<Batalha>> historico(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
