@@ -39,4 +39,16 @@ public class BatalhaController {
     public ResponseEntity<Batalha> create(@PathVariable(value = "id") Long id){
         return new ResponseEntity<>(service.create(id), HttpStatus.CREATED);
     }
+
+    @PutMapping("")
+    @ApiOperation("Ataque a Batalha on TODO list")
+    public ResponseEntity<Batalha> ataque(@RequestBody Batalha batalha){
+        return new ResponseEntity<>(service.ataque(batalha), HttpStatus.OK);
+    }
+
+    @PutMapping("/dano")
+    @ApiOperation("Ataque a Batalha on TODO list")
+    public ResponseEntity<Batalha> calcularDano(@RequestBody Batalha batalha){
+        return new ResponseEntity<>(service.calculoDano(batalha), HttpStatus.OK);
+    }
 }
