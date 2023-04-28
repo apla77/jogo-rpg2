@@ -36,6 +36,10 @@ public class BatalhaServise {
         ));
     }
 
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
     public Batalha create(Long id){
         Optional<Jogador> jogador = jogadorRepository.findById(id);
         Optional<Jogador> monstro = Optional.ofNullable(jogadorService.createMonstros(id));

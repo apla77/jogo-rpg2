@@ -51,4 +51,11 @@ public class BatalhaController {
     public ResponseEntity<Batalha> calcularDano(@RequestBody Batalha batalha){
         return new ResponseEntity<>(service.calculoDano(batalha), HttpStatus.OK);
     }
+
+    @DeleteMapping("")
+    @ApiOperation("Delete a Batalha on TODO list")
+    public ResponseEntity<HttpStatus> delete(@RequestHeader Long id){
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
