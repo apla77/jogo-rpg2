@@ -57,13 +57,12 @@ public class BatalhaServise {
         else{
             batalha.setIniciativa(monstro.get().getNome());
         }
-
         return repository.save(batalha);
     }
 
     public Batalha ataque(Batalha batalha){
-        if (batalha.getId() == null) {
-            throw new InvalidInputException("There is no ID");
+        if (batalha.getId() == null || batalha.getValorDado() > 0) {
+            throw new InvalidInputException("A Batalha não existe ou já foi finalizada");
         }
         if(batalha.getIniciativa().equals("Monstro")) {
             Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
@@ -80,20 +79,38 @@ public class BatalhaServise {
         return repository.save(batalha);
     }
 
+    public Batalha defesa(Batalha batalha){
+        if (batalha.getId() == null || batalha.getValorDado() > 0) {
+            throw new InvalidInputException("A Batalha não existe ou já foi finalizada");
+        }
+        if(batalha.getIniciativa().equals("Monstro")) {
+            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
+            monstro.get().setSaldo(jogarDados(1, 12) + batalha.getJogador().getPersonagem().getDefesa() + batalha.getJogador().getPersonagem().getAgilidade());
+            batalha.setMonstro(monstro.get());
+            batalha.setIniciativa("Jogador");
+        }
+        else{
+            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCod_batalha());
+            jogador.get().setSaldo(jogarDados(1, 12) + batalha.getMonstro().getPersonagem().getDefesa() + batalha.getMonstro().getPersonagem().getAgilidade());
+            batalha.setJogador(jogador.get());
+            batalha.setIniciativa("Monstro");
+        }
+        return repository.save(batalha);
+    }
+
     public Batalha calculoDano(Batalha batalha){
-        if (batalha.getId() == null) {
-            throw new InvalidInputException("There is no ID");
+        if (batalha.getId() == null || batalha.getValorDado() > 0) {
+            throw new InvalidInputException("Batalha já finalizada");
         }
             Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
             Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCod_batalha());
-            int dano = 0;
 
             if (batalha.getIniciativa().equals("Jogador")) {
                 if (jogador.get().getSaldo() > monstro.get().getSaldo()) {
-                    dano = jogarDados(monstro.get().getPersonagem().getQtdDado(), monstro.get().getPersonagem().getTolalFaces());
+                    int dano = jogarDados(monstro.get().getPersonagem().getQtdDado(), monstro.get().getPersonagem().getTolalFaces());
                     monstro.get().getPersonagem().setQtdVidas(monstro.get().getPersonagem().getQtdVidas() - dano);
                     if (monstro.get().getPersonagem().getQtdVidas() <= 0) {
-                        batalha.setValorDado(1);
+                        batalha.setValorDado(1); // Finaliza o jogo caso valor do daso seja maior que zero
                     } else {
                         batalha.setTurno(batalha.getTurno() + 1);
                     }
@@ -103,10 +120,10 @@ public class BatalhaServise {
             }
             else if(batalha.getIniciativa().equals("Monstro")) {
                 if (monstro.get().getSaldo() > jogador.get().getSaldo()) {
-                    dano = jogarDados(jogador.get().getPersonagem().getQtdDado(), jogador.get().getPersonagem().getTolalFaces());
+                    int dano = jogarDados(jogador.get().getPersonagem().getQtdDado(), jogador.get().getPersonagem().getTolalFaces());
                     jogador.get().getPersonagem().setQtdVidas(jogador.get().getPersonagem().getQtdVidas() - dano);
                     if (jogador.get().getPersonagem().getQtdVidas() <= 0) {
-                        batalha.setValorDado(1);
+                        batalha.setValorDado(1); // Finaliza o jogo caso valor do daso seja maior que zero
                     } else {
                         batalha.setTurno(batalha.getTurno() + 1);
                     }
@@ -126,7 +143,6 @@ public class BatalhaServise {
         if(jogador == monstro){
             jogadaDado();
         }
-
         if(jogador > monstro){
             result = true;
         }

@@ -40,10 +40,16 @@ public class BatalhaController {
         return new ResponseEntity<>(service.create(id), HttpStatus.CREATED);
     }
 
-    @PutMapping("")
+    @PutMapping("/ataque")
     @ApiOperation("Ataque a Batalha on TODO list")
     public ResponseEntity<Batalha> ataque(@RequestBody Batalha batalha){
         return new ResponseEntity<>(service.ataque(batalha), HttpStatus.OK);
+    }
+
+    @PutMapping("/defesa")
+    @ApiOperation("Ataque a Batalha on TODO list")
+    public ResponseEntity<Batalha> defesa(@RequestBody Batalha batalha){
+        return new ResponseEntity<>(service.defesa(batalha), HttpStatus.OK);
     }
 
     @PutMapping("/dano")
