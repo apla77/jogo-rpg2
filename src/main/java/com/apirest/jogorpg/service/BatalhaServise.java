@@ -8,6 +8,7 @@ import com.apirest.jogorpg.repository.BatalhaRepository;
 import com.apirest.jogorpg.repository.JogadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,10 +41,9 @@ public class BatalhaServise {
         repository.deleteById(id);
     }
 
-    public Batalha create(Long id){
-        Optional<Jogador> jogador = jogadorRepository.findById(id);
-        Optional<Jogador> monstro = Optional.ofNullable(jogadorService.createMonstros(id));
-        Batalha batalha = new Batalha();
+    public Batalha create(Batalha batalha){
+        Optional<Jogador> jogador = jogadorRepository.findById(batalha.getCod_jogador());
+        Optional<Jogador> monstro = Optional.ofNullable(jogadorService.createMonstros(batalha.getCod_jogador()));
 
         batalha.setCreatedAt(LocalDateTime.now());
         batalha.setJogador(jogador.get());

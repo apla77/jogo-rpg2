@@ -34,10 +34,10 @@ public class BatalhaController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("")
     @ApiOperation("Create a new Batalha in TODO list")
-    public ResponseEntity<Batalha> create(@PathVariable(value = "id") Long id){
-        return new ResponseEntity<>(service.create(id), HttpStatus.CREATED);
+    public ResponseEntity<Batalha> create(@RequestBody Batalha batalha){
+        return new ResponseEntity<>(service.create(batalha), HttpStatus.CREATED);
     }
 
     @PutMapping("/ataque")
