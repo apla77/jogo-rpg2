@@ -20,14 +20,7 @@ public class PersonagemService {
     @Autowired
     private BoredApiService boredApiService;
 
-    public Personagem create(Personagem person){
-        Personagem p = criarPersnagem(person.getTipo());
-        person.setQtdDado(p.getQtdDado());
-        person.setPoder(p.getPoder());
-        person.setAgilidade(p.getAgilidade());
-        person.setDefesa(p.getDefesa());
-        person.setTolalFaces(p.getTolalFaces());
-        person.setQtdVidas(p.getQtdVidas());
+    public Personagem create(Personagem person) {
         return repository.save(person);
     }
 
@@ -73,22 +66,5 @@ public class PersonagemService {
     }
     public Personagem createRandom(){
         return  repository.save(generateRandom());
-    }
-
-    public Personagem criarPersnagem(String p){
-        switch (p) {
-            case "GUERREIRO": {
-                Personagem person = new Personagem("GUERREIRO",20, 7, 5, 6, 1, 12);
-                return person;
-            }
-            case "BARBARO": {
-                Personagem person = new Personagem("BARBARO", 21, 10, 2, 5, 2, 8);
-                return person;
-            }case "CAVALEIRO": {
-                Personagem person = new Personagem("CAVALEIRO", 26, 6, 8, 3, 2, 6);
-                return person;
-            }
-        }
-        return null;
     }
 }

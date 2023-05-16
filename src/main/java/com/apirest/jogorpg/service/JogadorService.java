@@ -52,7 +52,6 @@ public class JogadorService {
             if(p.getTipo().equals(jogador.getTipo())){
                 jogador.setPersonagem(p);
                 jogador.setCod_batalha(p.getId());
-                //createMonstros(p.getId()+1L);
             }
         }
 

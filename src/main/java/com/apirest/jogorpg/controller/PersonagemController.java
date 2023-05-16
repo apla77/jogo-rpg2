@@ -46,10 +46,14 @@ public class PersonagemController {
         return new ResponseEntity<>(service.update(personagem), HttpStatus.OK);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("{id}")
     @ApiOperation("Delete a personagem on TODO list")
-    public ResponseEntity<HttpStatus> delete(@RequestHeader Long id){
-        service.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id){
+        try {
+            service.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

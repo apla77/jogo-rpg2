@@ -60,8 +60,12 @@ public class BatalhaController {
 
     @DeleteMapping("")
     @ApiOperation("Delete a Batalha on TODO list")
-    public ResponseEntity<HttpStatus> delete(@RequestHeader Long id){
-        service.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id){
+        try {
+            service.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

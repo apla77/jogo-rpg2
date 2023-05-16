@@ -1,5 +1,7 @@
 package com.apirest.jogorpg.controller;
 
+import com.apirest.jogorpg.config.RestExeptionHandler;
+import com.apirest.jogorpg.exception.ResourceNotFoundException;
 import com.apirest.jogorpg.model.Jogador;
 import com.apirest.jogorpg.model.Personagem;
 import com.apirest.jogorpg.repository.PersonagemRepository;
@@ -50,10 +52,14 @@ public class JogadorController {
         return new ResponseEntity<>(service.update(jogador), HttpStatus.OK);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping("{id}")
     @ApiOperation("Delete a Jogador on TODO list")
-    public ResponseEntity<HttpStatus> delete(@RequestHeader Long id){
-        service.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Long id) {
+        try {
+            service.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }
