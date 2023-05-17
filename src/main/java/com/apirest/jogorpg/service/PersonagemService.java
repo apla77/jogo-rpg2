@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -16,9 +15,6 @@ public class PersonagemService {
 
     @Autowired
     private PersonagemRepository repository;
-
-    @Autowired
-    private BoredApiService boredApiService;
 
     public Personagem create(Personagem person) {
         return repository.save(person);
