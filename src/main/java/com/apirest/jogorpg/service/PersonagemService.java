@@ -13,6 +13,9 @@ import java.util.Random;
 @Service
 public class PersonagemService {
 
+    public static final String ORC = "ORC";
+    public static final String GIGANTE = "GIGANTE";
+    public static final String LOBISOMEN = "LOBISOMEN";
     @Autowired
     private PersonagemRepository repository;
 
@@ -28,6 +31,10 @@ public class PersonagemService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Personagem not found with ID: " + id
         ));
+    }
+
+    public Personagem createRandom(){
+        return  repository.save(generateRandom());
     }
 
     public void delete(Long id){
@@ -46,21 +53,18 @@ public class PersonagemService {
         int n = random.nextInt(3) + 1;
         switch (n) {
             case 1: {
-                Personagem person = new Personagem("ORC", 42, 7, 1, 2, 3, 4);
+                Personagem person = new Personagem(ORC, 42, 7, 1, 2, 3, 4);
                 return person;
             }
             case 2: {
-                Personagem person = new Personagem("GIGANTE", 34, 10, 4, 4, 2, 6);
+                Personagem person = new Personagem(GIGANTE, 34, 10, 4, 4, 2, 6);
                 return person;
             }
             case 3: {
-                Personagem person = new Personagem("LOBISOMEN", 34, 7, 4, 7, 2, 4);
+                Personagem person = new Personagem(LOBISOMEN, 34, 7, 4, 7, 2, 4);
                 return person;
             }
         }
         return null;
-    }
-    public Personagem createRandom(){
-        return  repository.save(generateRandom());
     }
 }

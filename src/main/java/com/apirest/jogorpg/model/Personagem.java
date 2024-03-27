@@ -1,20 +1,27 @@
 package com.apirest.jogorpg.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+
+import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
 import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "PERSONAGEM")
 @Entity
 public class Personagem implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "TIPO")
     private String tipo;
@@ -39,7 +46,5 @@ public class Personagem implements Serializable {
         this.agilidade = agilidade;
         this.qtdDado = qtdDado;
         this.tolalFaces = tolalFaces;
-    }
-    public Personagem() {
     }
 }

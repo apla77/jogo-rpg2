@@ -1,0 +1,3 @@
+2023-08-13 09:21:24 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM PERSONAGEM BATALHA [*]PERSONAGEM"; SQL statement:
+SELECT * FROM PERSONAGEM BATALHA PERSONAGEM [42000-220]

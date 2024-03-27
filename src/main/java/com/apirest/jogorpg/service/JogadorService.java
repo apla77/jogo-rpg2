@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class JogadorService {
 
+    public static final String MONSTRO = "Monstro";
     @Autowired
     private JogadorRepository repository;
 
@@ -51,7 +52,7 @@ public class JogadorService {
         for (Personagem p : persons) {
             if(p.getTipo().equals(jogador.getTipo())){
                 jogador.setPersonagem(p);
-                jogador.setCod_batalha(p.getId());
+                jogador.setCodBatalha(p.getId());
             }
         }
 
@@ -63,8 +64,8 @@ public class JogadorService {
         Personagem p = personagemService.createRandom();
         monster.setPersonagem(p);
         monster.setTipo(p.getTipo());
-        monster.setNome("Monstro");
-        monster.setCod_batalha(id);
+        monster.setNome(MONSTRO);
+        monster.setCodBatalha(id);
         monster.setCreatedAt(LocalDateTime.now());
         return repository.save(monster);
     }

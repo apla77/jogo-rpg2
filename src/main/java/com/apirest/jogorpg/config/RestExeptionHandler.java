@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class RestExeptionHandler {
 
     public ResponseEntity<ErrorMassage> handle(Exception ex, HttpStatus statusCode, String description){
-        ErrorMassage message = new ErrorMassage(statusCode, LocalDateTime.now(), ex.getMessage(), description);
+        ErrorMassage errorMassage = new ErrorMassage(statusCode, LocalDateTime.now(), ex.getMessage(), description);
         ex.printStackTrace();
-        return new ResponseEntity<>(message, message.getStatusCode());
+        return new ResponseEntity<>(errorMassage, errorMassage.getStatusCode());
     }
     @ExceptionHandler({InvalidInputException.class})
     public ResponseEntity<ErrorMassage> invalidInputHandler(Exception ex, WebRequest request){

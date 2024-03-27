@@ -1,10 +1,6 @@
 package com.apirest.jogorpg.controller;
 
-import com.apirest.jogorpg.config.RestExeptionHandler;
-import com.apirest.jogorpg.exception.ResourceNotFoundException;
 import com.apirest.jogorpg.model.Jogador;
-import com.apirest.jogorpg.model.Personagem;
-import com.apirest.jogorpg.repository.PersonagemRepository;
 import com.apirest.jogorpg.service.JogadorService;
 import com.apirest.jogorpg.service.PersonagemService;
 import io.swagger.annotations.Api;

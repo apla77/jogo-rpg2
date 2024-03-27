@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,7 +23,6 @@ public class PersonagemController {
     @GetMapping("")
     @ApiOperation("find a personagens in TODO list")
     public ResponseEntity<List<Personagem>> getAll(){
-
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 

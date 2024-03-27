@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface JogadorRepository extends JpaRepository<Jogador, Long> {
 
-
     @Query(value="select * from jogador j where j.nome = 'Monstro' and j.cod_batalha = ?1", nativeQuery = true)
-    public Jogador findByCodBatalha(Long cod_batalha);
+    public Jogador findByCodBatalha(Long codBatalha);
 }

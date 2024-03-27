@@ -1,5 +1,6 @@
 package com.apirest.jogorpg.service;
 
+import com.apirest.jogorpg.common.CalculaDanosJogada;
 import com.apirest.jogorpg.exception.InvalidInputException;
 import com.apirest.jogorpg.exception.ResourceNotFoundException;
 import com.apirest.jogorpg.model.Batalha;
@@ -15,8 +16,12 @@ import java.util.Optional;
 import java.util.Random;
 
 @Service
-public class BatalhaServise {
+public class BatalhaServise extends CalculaDanosJogada {
 
+    public static final int QUANTIDADE_DADOS = 1;
+    public static final int TOTAL_FACES = 12;
+    public static final String MONSTRO = "Monstro";
+    public static final String JOGADOR = "Jogador";
     @Autowired
     private BatalhaRepository repository;
 
@@ -32,7 +37,7 @@ public class BatalhaServise {
 
     public Batalha getById(Long id){
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
-                "Jogador not found with ID: " + id
+                "Batalha not found with ID: " + id
         ));
     }
 
@@ -60,95 +65,40 @@ public class BatalhaServise {
     }
 
     public Batalha ataque(Batalha batalha){
-        if (batalha.getId() == null || batalha.getValorDado() > 0) {
+        if (batalha.getValorDado() > 0) {
             throw new InvalidInputException("A Batalha não existe ou já foi finalizada");
         }
-        if(batalha.getIniciativa().equals("Monstro")) {
-            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
-            monstro.get().setSaldo(jogarDados(1, 12) + batalha.getJogador().getPersonagem().getPoder() + batalha.getJogador().getPersonagem().getAgilidade());
+        if(batalha.getIniciativa().equals(MONSTRO)) {
+            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCodBatalha()));
+            monstro.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getJogador().getPersonagem().getPoder() + batalha.getJogador().getPersonagem().getAgilidade());
             batalha.setMonstro(monstro.get());
-            batalha.setIniciativa("Jogador");
+            batalha.setIniciativa(JOGADOR);
         }
         else{
-            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCod_batalha());
-            jogador.get().setSaldo(jogarDados(1, 12) + batalha.getMonstro().getPersonagem().getPoder() + batalha.getMonstro().getPersonagem().getAgilidade());
+            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCodBatalha());
+            jogador.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getMonstro().getPersonagem().getPoder() + batalha.getMonstro().getPersonagem().getAgilidade());
             batalha.setJogador(jogador.get());
-            batalha.setIniciativa("Monstro");
+            batalha.setIniciativa(MONSTRO);
         }
         return repository.save(batalha);
     }
 
     public Batalha defesa(Batalha batalha){
-        if (batalha.getId() == null || batalha.getValorDado() > 0) {
+        if (batalha.getValorDado() > 0) {
             throw new InvalidInputException("A Batalha não existe ou já foi finalizada");
         }
-        if(batalha.getIniciativa().equals("Monstro")) {
-            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
-            monstro.get().setSaldo(jogarDados(1, 12) + batalha.getJogador().getPersonagem().getDefesa() + batalha.getJogador().getPersonagem().getAgilidade());
+        if(batalha.getIniciativa().equals(MONSTRO)) {
+            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCodBatalha()));
+            monstro.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getJogador().getPersonagem().getDefesa() + batalha.getJogador().getPersonagem().getAgilidade());
             batalha.setMonstro(monstro.get());
-            batalha.setIniciativa("Jogador");
+            batalha.setIniciativa(JOGADOR);
         }
         else{
-            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCod_batalha());
-            jogador.get().setSaldo(jogarDados(1, 12) + batalha.getMonstro().getPersonagem().getDefesa() + batalha.getMonstro().getPersonagem().getAgilidade());
+            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCodBatalha());
+            jogador.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getMonstro().getPersonagem().getDefesa() + batalha.getMonstro().getPersonagem().getAgilidade());
             batalha.setJogador(jogador.get());
-            batalha.setIniciativa("Monstro");
+            batalha.setIniciativa(MONSTRO);
         }
         return repository.save(batalha);
-    }
-
-    public Batalha calculoDano(Batalha batalha){
-        if (batalha.getId() == null || batalha.getValorDado() > 0) {
-            throw new InvalidInputException("Batalha já finalizada");
-        }
-            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCod_batalha()));
-            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCod_batalha());
-
-            if (batalha.getIniciativa().equals("Jogador")) {
-                dano(batalha, jogador, monstro);
-                batalha.setIniciativa("Monstro");
-            }
-            else if(batalha.getIniciativa().equals("Monstro")) {
-                dano(batalha, monstro, jogador);
-                batalha.setIniciativa("Jogador");
-            }
-        return repository.save(batalha);
-    }
-
-    public void dano(Batalha batalha, Optional<Jogador> jogador, Optional<Jogador> monstro){
-        if (jogador.get().getSaldo() > monstro.get().getSaldo()) {
-            int dano = jogarDados(monstro.get().getPersonagem().getQtdDado(), monstro.get().getPersonagem().getTolalFaces());
-            monstro.get().getPersonagem().setQtdVidas(monstro.get().getPersonagem().getQtdVidas() - dano);
-            if (monstro.get().getPersonagem().getQtdVidas() <= 0) {
-                batalha.setValorDado(1); // Finaliza o jogo caso valor do dano seja maior que zero
-            } else {
-                batalha.setTurno(batalha.getTurno() + 1);
-            }
-            batalha.setMonstro(monstro.get());
-        }
-    }
-
-    public boolean jogadaDado(){
-        boolean result = false;
-        Random random = new Random();
-        int jogador = random.nextInt(20) + 1;
-        int monstro = random.nextInt(20) + 1;
-
-        if(jogador == monstro){
-            jogadaDado();
-        }
-        if(jogador > monstro){
-            result = true;
-        }
-        return result;
-    }
-
-    public int jogarDados(int v, int faces){
-        int total = 0;
-        Random random = new Random();
-        for (int i = 0; i < v; i++) {
-            total += (random.nextInt(faces) + 1);
-        }
-        return total;
     }
 }

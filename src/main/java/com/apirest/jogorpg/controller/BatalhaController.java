@@ -1,9 +1,7 @@
 package com.apirest.jogorpg.controller;
 
 import com.apirest.jogorpg.model.Batalha;
-import com.apirest.jogorpg.model.Jogador;
 import com.apirest.jogorpg.service.BatalhaServise;
-import com.apirest.jogorpg.service.JogadorService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +38,19 @@ public class BatalhaController {
         return new ResponseEntity<>(service.create(batalha), HttpStatus.CREATED);
     }
 
-    @PutMapping("/ataque")
+    @PostMapping("/ataque")
     @ApiOperation("Ataque a Batalha on TODO list")
     public ResponseEntity<Batalha> ataque(@RequestBody Batalha batalha){
         return new ResponseEntity<>(service.ataque(batalha), HttpStatus.OK);
     }
 
-    @PutMapping("/defesa")
+    @PostMapping("/defesa")
     @ApiOperation("Ataque a Batalha on TODO list")
     public ResponseEntity<Batalha> defesa(@RequestBody Batalha batalha){
         return new ResponseEntity<>(service.defesa(batalha), HttpStatus.OK);
     }
 
-    @PutMapping("/dano")
+    @PostMapping("/dano")
     @ApiOperation("Ataque a Batalha on TODO list")
     public ResponseEntity<Batalha> calcularDano(@RequestBody Batalha batalha){
         return new ResponseEntity<>(service.calculoDano(batalha), HttpStatus.OK);

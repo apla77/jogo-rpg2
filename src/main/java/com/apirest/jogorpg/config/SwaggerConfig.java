@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+// Url acesso Api RPG Swagger, http://localhost:8080/swagger-ui/index.html
+
 public class SwaggerConfig {
 
     @Bean
