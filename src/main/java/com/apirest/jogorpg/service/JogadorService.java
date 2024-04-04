@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JogadorService {
@@ -18,12 +19,11 @@ public class JogadorService {
     public static final String MONSTRO = "Monstro";
     @Autowired
     private JogadorRepository repository;
-
     @Autowired
     private PersonagemService personagemService;
-
     @Autowired
     private PersonagemRepository personRepository;
+
 
     public List<Jogador> findAll(){
         return repository.findAll();
@@ -47,25 +47,21 @@ public class JogadorService {
     }
 
     public Jogador create(Jogador jogador){
-        List<Personagem> persons = personRepository.findAll();
+        Optional<Personagem> persons = personRepository.findById(jogador.getPersonagem().getId());
         jogador.setCreatedAt(LocalDateTime.now());
-        for (Personagem p : persons) {
-            if(p.getTipo().equals(jogador.getTipo())){
+        for (persons) {
+            if(!p.getTipo().equals(MONSTRO)){
                 jogador.setPersonagem(p);
-                jogador.setCodBatalha(p.getId());
             }
         }
-
         return repository.save(jogador);
     }
 
     public Jogador createMonstros(Long id){
         Jogador monster = new Jogador();
-        Personagem p = personagemService.createRandom();
-        monster.setPersonagem(p);
-        monster.setTipo(p.getTipo());
+        Personagem person = personagemService.generateRandomPersonagem();
+        monster.setPersonagem(person);
         monster.setNome(MONSTRO);
-        monster.setCodBatalha(id);
         monster.setCreatedAt(LocalDateTime.now());
         return repository.save(monster);
     }

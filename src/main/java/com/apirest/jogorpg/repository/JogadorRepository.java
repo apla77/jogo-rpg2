@@ -5,11 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface JogadorRepository extends JpaRepository<Jogador, Long> {
 
     @Query(value="select * from jogador j where j.nome = 'Monstro' and j.cod_batalha = ?1", nativeQuery = true)
-    public Jogador findByCodBatalha(Long codBatalha);
+    public Jogador findByPersonagemMostro(Long codBatalha);
 }
+

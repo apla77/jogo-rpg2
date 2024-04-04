@@ -13,11 +13,11 @@ import java.util.Random;
 @Service
 public class PersonagemService {
 
-    public static final String ORC = "ORC";
-    public static final String GIGANTE = "GIGANTE";
-    public static final String LOBISOMEN = "LOBISOMEN";
     @Autowired
     private PersonagemRepository repository;
+    private static final String ORC = "ORC";
+    private static final String GIGANTE = "GIGANTE";
+    private static final String LOBISOMEN = "LOBISOMEN";
 
     public Personagem create(Personagem person) {
         return repository.save(person);
@@ -33,10 +33,6 @@ public class PersonagemService {
         ));
     }
 
-    public Personagem createRandom(){
-        return  repository.save(generateRandom());
-    }
-
     public void delete(Long id){
         repository.deleteById(id);
     }
@@ -48,7 +44,11 @@ public class PersonagemService {
         return repository.save(personagem);
     }
 
-    public Personagem generateRandom() {
+    public Personagem createRandomPersonagem(){
+        return  repository.save(generateRandomPersonagem());
+    }
+
+    public Personagem generateRandomPersonagem() {
         Random random = new Random();
         int n = random.nextInt(3) + 1;
         switch (n) {

@@ -35,16 +35,10 @@ public class Jogador implements Serializable {
     @Column(name = "NOME")
     private String nome;
 
-    @Column(name = "TIPO")
-    private String tipo;
-
     @Lob
     @Column(name = "PERSONAGEM", length = 1000)
     private Personagem personagem;
 
     @Column(name = "SALDO")
     private int saldo;
-
-    @Column(name = "COD_BATALHA")
-    private Long codBatalha;
 }

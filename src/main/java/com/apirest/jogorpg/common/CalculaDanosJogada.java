@@ -27,8 +27,8 @@ public class CalculaDanosJogada {
         if (batalha.getValorDado() > 0) {
             throw new InvalidInputException("Batalha já finalizada");
         }
-        Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCodBatalha()));
-        Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCodBatalha());
+        Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByPersonagemMostro(batalha.getMonstro().getPersonagem().getId()));
+        Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getPersonagem().getId());
 
         if (batalha.getIniciativa().equals(JOGADOR)) {
             dano(batalha, jogador, monstro);

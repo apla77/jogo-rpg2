@@ -40,7 +40,7 @@ public class Batalha implements Serializable {
     private String iniciativa;
 
     @Column(name = "VALOR_DADO")
-    private int ValorDado;
+    private int valorDado;
 
     @Lob
     @Column(name = "JOGADOR", length = 1000)

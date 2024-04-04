@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class BatalhaServise extends CalculaDanosJogada {
@@ -69,13 +68,13 @@ public class BatalhaServise extends CalculaDanosJogada {
             throw new InvalidInputException("A Batalha não existe ou já foi finalizada");
         }
         if(batalha.getIniciativa().equals(MONSTRO)) {
-            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCodBatalha()));
+            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByPersonagemMostro(batalha.getMonstro().getPersonagem().getId()));
             monstro.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getJogador().getPersonagem().getPoder() + batalha.getJogador().getPersonagem().getAgilidade());
             batalha.setMonstro(monstro.get());
             batalha.setIniciativa(JOGADOR);
         }
         else{
-            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCodBatalha());
+            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getPersonagem().getId());
             jogador.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getMonstro().getPersonagem().getPoder() + batalha.getMonstro().getPersonagem().getAgilidade());
             batalha.setJogador(jogador.get());
             batalha.setIniciativa(MONSTRO);
@@ -88,13 +87,13 @@ public class BatalhaServise extends CalculaDanosJogada {
             throw new InvalidInputException("A Batalha não existe ou já foi finalizada");
         }
         if(batalha.getIniciativa().equals(MONSTRO)) {
-            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByCodBatalha(batalha.getMonstro().getCodBatalha()));
+            Optional<Jogador> monstro = Optional.ofNullable(jogadorRepository.findByPersonagemMostro(batalha.getMonstro().getPersonagem().getId()));
             monstro.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getJogador().getPersonagem().getDefesa() + batalha.getJogador().getPersonagem().getAgilidade());
             batalha.setMonstro(monstro.get());
             batalha.setIniciativa(JOGADOR);
         }
         else{
-            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getCodBatalha());
+            Optional<Jogador> jogador = jogadorRepository.findById(batalha.getJogador().getPersonagem().getId());
             jogador.get().setSaldo(jogarDados(QUANTIDADE_DADOS, TOTAL_FACES) + batalha.getMonstro().getPersonagem().getDefesa() + batalha.getMonstro().getPersonagem().getAgilidade());
             batalha.setJogador(jogador.get());
             batalha.setIniciativa(MONSTRO);
